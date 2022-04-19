@@ -5,14 +5,14 @@ import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import io.github.toquery.framework.dao.EnableAppJpaRepositories;
-import io.github.toquery.framework.oauth.authorization.AppJdbcOAuth2AuthorizationConsentService;
-import io.github.toquery.framework.oauth.authorization.AppJdbcOAuth2AuthorizationService;
+import io.github.toquery.framework.oauth.authorization.AppJdbcOauth2AuthorizationConsentService;
+import io.github.toquery.framework.oauth.authorization.AppJdbcOauth2AuthorizationService;
 import io.github.toquery.framework.oauth.authorization.AppJdbcRegisteredClientRepository;
 import io.github.toquery.framework.oauth.authorization.jose.Jwks;
-import io.github.toquery.framework.oauth.authorization.properties.AppOAuthProperties;
-import io.github.toquery.framework.oauth.authorization.rest.OAuthRegisteredClientRest;
-import io.github.toquery.framework.oauth.authorization.services.IOAuthRegisteredClientService;
-import io.github.toquery.framework.oauth.authorization.services.impl.OAuthRegisteredClientServiceImpl;
+import io.github.toquery.framework.oauth.authorization.properties.AppOauthProperties;
+import io.github.toquery.framework.oauth.authorization.rest.OauthRegisteredClientRest;
+import io.github.toquery.framework.oauth.authorization.services.IOauthRegisteredClientService;
+import io.github.toquery.framework.oauth.authorization.services.impl.OauthRegisteredClientServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -36,13 +36,13 @@ import org.springframework.security.oauth2.server.authorization.config.ProviderS
 @Slf4j
 @Lazy(false)
 @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-@EnableConfigurationProperties({AppOAuthProperties.class})
+@EnableConfigurationProperties({AppOauthProperties.class})
 @EntityScan(basePackages = "io.github.toquery.framework.oauth.authorization.entity")
 @EnableAppJpaRepositories(basePackages = "io.github.toquery.framework.oauth.authorization.repository")
-@ConditionalOnProperty(prefix = AppOAuthProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(prefix = AppOauthProperties.PREFIX, name = "enabled", havingValue = "true", matchIfMissing = true)
 public class AppOauthAuthorizationAutoConfiguration {
     @Autowired
-    private AppOAuthProperties appOAuthProperties;
+    private AppOauthProperties appOauthProperties;
 
     public AppOauthAuthorizationAutoConfiguration() {
         log.info("AppOauthAuthorizationAutoConfiguration");
@@ -50,14 +50,14 @@ public class AppOauthAuthorizationAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public OAuthRegisteredClientRest oauthRegisteredClientRest() {
-        return new OAuthRegisteredClientRest();
+    public OauthRegisteredClientRest oauthRegisteredClientRest() {
+        return new OauthRegisteredClientRest();
     }
 
     @Bean
     @ConditionalOnMissingBean
-    public IOAuthRegisteredClientService oauthRegisteredClientService() {
-        return new OAuthRegisteredClientServiceImpl();
+    public IOauthRegisteredClientService oauthRegisteredClientService() {
+        return new OauthRegisteredClientServiceImpl();
     }
 
     @Bean
@@ -69,13 +69,13 @@ public class AppOauthAuthorizationAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public OAuth2AuthorizationService authorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
-        return new AppJdbcOAuth2AuthorizationService(jdbcTemplate, registeredClientRepository);
+        return new AppJdbcOauth2AuthorizationService(jdbcTemplate, registeredClientRepository);
     }
 
     @Bean
     @ConditionalOnMissingBean
     public OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
-        return new AppJdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
+        return new AppJdbcOauth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
     }
 
     @Bean

@@ -5,10 +5,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  *
+ * @author toquery
  */
 @Data
-@ConfigurationProperties(prefix = AppOAuthProperties.PREFIX)
-public class AppOAuthProperties {
+@ConfigurationProperties(prefix = AppOauthProperties.PREFIX)
+public class AppOauthProperties {
 
     public static final String PREFIX = "app.oauth";
 

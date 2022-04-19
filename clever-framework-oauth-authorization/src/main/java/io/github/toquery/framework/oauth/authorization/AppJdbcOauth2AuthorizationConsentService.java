@@ -6,15 +6,16 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 
 /**
  *
+ * @author toquery
  */
-public class AppJdbcOAuth2AuthorizationConsentService extends JdbcOAuth2AuthorizationConsentService {
+public class AppJdbcOauth2AuthorizationConsentService extends JdbcOAuth2AuthorizationConsentService {
     /**
      * Constructs a {@code JdbcOAuth2AuthorizationConsentService} using the provided parameters.
      *
      * @param jdbcOperations             the JDBC operations
      * @param registeredClientRepository the registered client repository
      */
-    public AppJdbcOAuth2AuthorizationConsentService(JdbcOperations jdbcOperations, RegisteredClientRepository registeredClientRepository) {
+    public AppJdbcOauth2AuthorizationConsentService(JdbcOperations jdbcOperations, RegisteredClientRepository registeredClientRepository) {
         super(jdbcOperations, registeredClientRepository);
     }
 }

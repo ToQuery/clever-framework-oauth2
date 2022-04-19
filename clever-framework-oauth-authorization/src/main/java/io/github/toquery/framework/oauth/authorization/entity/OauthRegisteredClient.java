@@ -11,7 +11,6 @@ import org.springframework.security.oauth2.server.authorization.config.TokenSett
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import java.time.Instant;
@@ -25,7 +24,7 @@ import java.util.Set;
 @Setter
 @JsonIgnoreProperties(value = {"hibernateLazyInitializer", "accountNonExpired", "accountNonLocked", "credentialsNonExpired"})
 @Table(name = "oauth2_registered_client")
-public class OAuthRegisteredClient extends AppBaseEntity {
+public class OauthRegisteredClient extends AppBaseEntity {
 
     @Column(name = "client_id", length = 100, updatable = false)
     private String clientId;

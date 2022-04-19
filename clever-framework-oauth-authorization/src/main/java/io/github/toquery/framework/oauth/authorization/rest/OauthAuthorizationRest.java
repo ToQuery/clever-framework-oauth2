@@ -5,8 +5,8 @@ import io.github.toquery.framework.core.exception.AppException;
 import io.github.toquery.framework.core.log.AppLogType;
 import io.github.toquery.framework.core.log.annotation.AppLogMethod;
 import io.github.toquery.framework.crud.controller.AppBaseCrudController;
-import io.github.toquery.framework.oauth.authorization.entity.OAuthRegisteredClient;
-import io.github.toquery.framework.oauth.authorization.services.IOAuthRegisteredClientService;
+import io.github.toquery.framework.oauth.authorization.entity.OauthRegisteredClient;
+import io.github.toquery.framework.oauth.authorization.services.IOauthRegisteredClientService;
 import io.github.toquery.framework.web.domain.ResponseBodyWrap;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,13 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Set;
 
 /**
- *
  * @author toquery
  */
 @RestController
-@RequestMapping("/sys/oauth/client")
+@RequestMapping("/sys/oauth/authorization")
 @Timed(value = "system-oauth", description = "系统-授权")
-public class OAuthRegisteredClientRest extends AppBaseCrudController<IOAuthRegisteredClientService, OAuthRegisteredClient> {
+public class OauthAuthorizationRest extends AppBaseCrudController<IOauthRegisteredClientService, OauthRegisteredClient> {
 
     private static final String[] sort = new String[]{};
 
@@ -37,35 +36,36 @@ public class OAuthRegisteredClientRest extends AppBaseCrudController<IOAuthRegis
     public static final String BIZ_NAME = "授权管理";
 
 
-    @AppLogMethod(value = OAuthRegisteredClient.class, logType = AppLogType.QUERY, modelName = MODEL_NAME, bizName = BIZ_NAME)
+    @AppLogMethod(value = OauthRegisteredClient.class, logType = AppLogType.QUERY, modelName = MODEL_NAME, bizName = BIZ_NAME)
     @PreAuthorize("hasAnyAuthority('system:oauth:query')")
     @GetMapping
     public ResponseBodyWrap<?> pageResponseResult() {
         return super.pageResponseResult(sort);
     }
 
-    @AppLogMethod(value = OAuthRegisteredClient.class, logType = AppLogType.QUERY, modelName = MODEL_NAME, bizName = BIZ_NAME)
+    @AppLogMethod(value = OauthRegisteredClient.class, logType = AppLogType.QUERY, modelName = MODEL_NAME, bizName = BIZ_NAME)
     @PreAuthorize("hasAnyAuthority('system:oauth:query')")
     @GetMapping(value = "/list")
     public ResponseBodyWrap<?> listResponseResult() {
         return super.listResponseResult(sort);
     }
 
-    @AppLogMethod(value = OAuthRegisteredClient.class, logType = AppLogType.MODIFY, modelName = MODEL_NAME, bizName = BIZ_NAME)
+    @AppLogMethod(value = OauthRegisteredClient.class, logType = AppLogType.MODIFY, modelName = MODEL_NAME, bizName = BIZ_NAME)
     @PreAuthorize("hasAnyAuthority('system:oauth:modify')")
     @PutMapping
-    public ResponseBodyWrap<?> updateResponseResult(@RequestBody OAuthRegisteredClient oAuthRegisteredClient) throws AppException {
-        return super.handleResponseBody(domainService.update(oAuthRegisteredClient, Sets.newHashSet("clientSecret", "clientName", "clientAuthenticationMethodsString", "authorizationGrantTypesString", "redirectUrisString", "scopesString")));
+    public ResponseBodyWrap<?> updateResponseResult(@RequestBody OauthRegisteredClient oauthRegisteredClient) throws AppException {
+        return super.handleResponseBody(domainService.update(oauthRegisteredClient, Sets.newHashSet("name", "code")));
     }
 
-    @AppLogMethod(value = OAuthRegisteredClient.class, logType = AppLogType.DELETE, modelName = MODEL_NAME, bizName = BIZ_NAME)
+    @AppLogMethod(value = OauthRegisteredClient.class, logType = AppLogType.DELETE, modelName = MODEL_NAME, bizName = BIZ_NAME)
     @PreAuthorize("hasAnyAuthority('system:oauth:delete')")
     @DeleteMapping
-    public ResponseBodyWrap<?> deleteResponseResult(@RequestParam Set<Long> ids) throws AppException {
-        return super.deleteResponseResult(ids);
+    public ResponseBodyWrap<?> deleteSysRoleCheck(@RequestParam Set<Long> ids) throws AppException {
+        domainService.deleteByIds(ids);
+        return ResponseBodyWrap.builder().success().build();
     }
 
-    @AppLogMethod(value = OAuthRegisteredClient.class, logType = AppLogType.QUERY, modelName = MODEL_NAME, bizName = BIZ_NAME)
+    @AppLogMethod(value = OauthRegisteredClient.class, logType = AppLogType.QUERY, modelName = MODEL_NAME, bizName = BIZ_NAME)
     @PreAuthorize("hasAnyAuthority('system:oauth:query')")
     @GetMapping("{id}")
     public ResponseBodyWrap<?> detailResponseBody(@PathVariable Long id) {

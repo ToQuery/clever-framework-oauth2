@@ -8,14 +8,14 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 /**
  *
  */
-public class AppJdbcOAuth2AuthorizationService extends JdbcOAuth2AuthorizationService {
+public class AppJdbcOauth2AuthorizationService extends JdbcOAuth2AuthorizationService {
     /**
      * Constructs a {@code JdbcOAuth2AuthorizationService} using the provided parameters.
      *
      * @param jdbcOperations             the JDBC operations
      * @param registeredClientRepository the registered client repository
      */
-    public AppJdbcOAuth2AuthorizationService(JdbcOperations jdbcOperations, RegisteredClientRepository registeredClientRepository) {
+    public AppJdbcOauth2AuthorizationService(JdbcOperations jdbcOperations, RegisteredClientRepository registeredClientRepository) {
         super(jdbcOperations, registeredClientRepository);
     }
 
@@ -26,7 +26,7 @@ public class AppJdbcOAuth2AuthorizationService extends JdbcOAuth2AuthorizationSe
      * @param registeredClientRepository the registered client repository
      * @param lobHandler                 the handler for large binary fields and large text fields
      */
-    public AppJdbcOAuth2AuthorizationService(JdbcOperations jdbcOperations, RegisteredClientRepository registeredClientRepository, LobHandler lobHandler) {
+    public AppJdbcOauth2AuthorizationService(JdbcOperations jdbcOperations, RegisteredClientRepository registeredClientRepository, LobHandler lobHandler) {
         super(jdbcOperations, registeredClientRepository, lobHandler);
     }
 }

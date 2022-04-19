@@ -5,6 +5,7 @@ import org.springframework.security.oauth2.server.authorization.client.JdbcRegis
 
 /**
  *
+ * @author toquery
  */
 public class AppJdbcRegisteredClientRepository extends JdbcRegisteredClientRepository {
 
