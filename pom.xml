@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>clever-framework</artifactId>
+        <groupId>io.github.toquery</groupId>
+        <version>1.0.8-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>clever-framework-oauth</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>clever-framework-oauth-authorization</module>
+        <module>clever-framework-oauth-client</module>
+    </modules>
+
+    <properties>
+        <spring.security.oauth2.authorization.server.version>0.2.3</spring.security.oauth2.authorization.server.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${spring.security.oauth2.authorization.server.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
